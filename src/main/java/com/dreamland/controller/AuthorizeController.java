@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
@@ -31,7 +33,7 @@ public class AuthorizeController {
     private UserMapper userMapper;
 
     @RequestMapping("/callback")
-    public String callback(@RequestParam("code") String code, @RequestParam("state") String state, HttpSession session) {
+    public String callback(@RequestParam("code") String code, @RequestParam("state") String state, HttpSession session, HttpServletResponse response) {
         AccessToken accessToken = new AccessToken();
         accessToken.setCode(code);
         accessToken.setState(state);
@@ -44,12 +46,13 @@ public class AuthorizeController {
         if (gitHubUser != null) {
             User user = new User();
             user.setName(gitHubUser.getName());
-            user.setToken(UUID.randomUUID().toString());
+            String token = UUID.randomUUID().toString();
+            user.setToken(token);
             user.setAccountId(String.valueOf(gitHubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             userMapper.insert(user);
-            session.setAttribute("user", gitHubUser);
+            response.addCookie(new Cookie("token", token));
             return "redirect:/";
         } else {
             return "redirect:/";
