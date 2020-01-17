@@ -20,20 +20,21 @@
                 <span>发布</span>
             </h2>
             <hr>
-            <form action="">
+            <form action="/publish" method="post">
                 <div class="form-group">
                     <label for="title">问题标题（简单扼要）</label>
-                    <input type="text" class="form-control" name="title" id="title" placeholder="问题标题">
+                    <input type="text" class="form-control" name="title" id="title" th:value="${title}" placeholder="问题标题">
                 </div>
                 <div class="form-group">
-                    <label for="textContent">问题标题（简单扼要）</label>
-                    <textarea id="textContent" name="textContent" class="form-control" rows="10"></textarea>
+                    <label for="description">问题标题（简单扼要）</label>
+                    <textarea id="description" name="description" th:text="${description}" class="form-control" rows="10"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="addLable">添加标签</label>
-                    <input type="text" class="form-control" name="addLable" id="addLable" placeholder="用逗号分隔">
+                    <label for="tag">添加标签</label>
+                    <input type="text" class="form-control" name="tag" th:value="${tag}" id="tag" placeholder="用逗号分隔">
                 </div>
                 <!-- Standard button -->
+                <span th:text="${msg}"></span>
                 <button type="submit" class="btn btn-success btn-publish">发布</button>
             </form>
         </div>
