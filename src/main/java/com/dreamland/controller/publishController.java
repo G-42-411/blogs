@@ -60,7 +60,7 @@ public class publishController {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("token")) {
                     String token = cookie.getValue();
-                    user = userMapper.findUserByToken(token);
+                    user = userMapper.findByToken(token);
                     if (user == null) {
                         model.addAttribute("msg", "用户未登录");
                         return "publish";
@@ -72,7 +72,7 @@ public class publishController {
         question.setTitle(title);
         question.setDescription(description);
         question.setTag(tag);
-        question.setCreator(Integer.parseInt(user.getAccountId()));
+        question.setCreator(user.getId());
         question.setGmtCreate(System.currentTimeMillis());
         question.setGmtModified(question.getGmtCreate());
 

@@ -1,4 +1,4 @@
-package com.dreamland.entity;
+package com.dreamland.dto;
 
 import lombok.Data;
 

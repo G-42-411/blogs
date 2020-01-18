@@ -1,8 +1,8 @@
 package com.dreamland.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.dreamland.entity.AccessToken;
-import com.dreamland.entity.GitHubUser;
+import com.dreamland.dto.AccessToken;
+import com.dreamland.dto.GitHubUser;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
 
