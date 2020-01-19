@@ -24,11 +24,15 @@ public class QuestionDTOService {
     public PaginationDTO list(Integer page, Integer size) {
         Integer totalCount = questionMapper.count();
         Integer questionCount = totalCount % size == 0 ? totalCount / size : totalCount / size + 1;
+
         if (page < 1)
             page = 1;
         if (page > questionCount)
             page = questionCount;
-        Integer offset = size * (page - 1);
+        Integer offset = 0;
+        if(page != 0){
+            offset = size * (page - 1);
+        }
         List<Question> questions = questionMapper.List(offset, size);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         PaginationDTO paginationDTO = new PaginationDTO();
@@ -52,7 +56,10 @@ public class QuestionDTOService {
             page = 1;
         if (page > questionCount)
             page = questionCount;
-        Integer offset = size * (page - 1);
+        Integer offset = 0;
+        if(page != 0) {
+            offset = size * (page - 1);
+        }
         List<Question> questions = questionMapper.ListByUserId(offset, size,userId);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         PaginationDTO paginationDTO = new PaginationDTO();

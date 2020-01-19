@@ -35,7 +35,7 @@ public class publishController {
             HttpServletRequest request,
             Model model) {
         Question question = new Question();
-        User user = null;
+//        User user = null;
 
         model.addAttribute("title",title);
         model.addAttribute("description",description);
@@ -55,20 +55,21 @@ public class publishController {
         }
 
 
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null && cookies.length > 0) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("token")) {
-                    String token = cookie.getValue();
-                    user = userMapper.findByToken(token);
-                    if (user == null) {
-                        model.addAttribute("msg", "用户未登录");
-                        return "publish";
-                    }
-                    break;
-                }
-            }
-        }
+//        Cookie[] cookies = request.getCookies();
+//        if (cookies != null && cookies.length > 0) {
+//            for (Cookie cookie : cookies) {
+//                if (cookie.getName().equals("token")) {
+//                    String token = cookie.getValue();
+//                    user = userMapper.findByToken(token);
+//                    if (user == null) {
+//                        model.addAttribute("msg", "用户未登录");
+//                        return "publish";
+//                    }
+//                    break;
+//                }
+//            }
+//        }
+        User user = (User) request.getSession().getAttribute("user");
         question.setTitle(title);
         question.setDescription(description);
         question.setTag(tag);
