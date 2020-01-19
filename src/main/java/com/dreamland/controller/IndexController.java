@@ -1,7 +1,6 @@
 package com.dreamland.controller;
 
 import com.dreamland.dto.PaginationDTO;
-import com.dreamland.dto.QuestionDTO;
 import com.dreamland.mapper.UserMapper;
 import com.dreamland.pojo.User;
 import com.dreamland.service.QuestionDTOService;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Controller
 public class IndexController {
