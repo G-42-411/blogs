@@ -1,9 +1,7 @@
 package com.dreamland.mapper;
 
 import com.dreamland.pojo.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface UserMapper {
@@ -13,6 +11,13 @@ public interface UserMapper {
 
     @Select("select * from user where token = #{token}")
     User findByToken(String token);
+
     @Select("select * from user where id = #{id}")
     User findById(Integer id);
+
+    @Select("select * from user where account_id = #{accountId}")
+    User findByAccountId(@Param("accountId") String accountId);
+
+    @Update({"update user set name = #{name}, token = #{token}, gmt_modified = #{gmtModified}, bio = #{bio}, avatar_url = #{avatarUrl} where account_id = #{accountId}"})
+    void update(User user);
 }

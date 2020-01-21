@@ -28,9 +28,6 @@ public class SessionInterceptor implements HandlerInterceptor {
                     if (user != null) {
                         request.getSession().setAttribute("user", user);
                     }
-//                    else{
-//                        request.getRequestDispatcher("/").forward(request,response);
-//                    }
                     break;
                 }
             }
