@@ -5,7 +5,9 @@ import com.dreamland.dto.QuestionDTO;
 import com.dreamland.mapper.QuestionMapper;
 import com.dreamland.mapper.UserMapper;
 import com.dreamland.pojo.Question;
+import com.dreamland.pojo.QuestionExample;
 import com.dreamland.pojo.User;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,8 @@ public class QuestionDTOService {
     private UserMapper userMapper;
 
     public PaginationDTO list(Integer page, Integer size) {
-        Integer totalCount = questionMapper.count();
+        Integer totalCount = (int)questionMapper.countByExample(new QuestionExample());
+//        Integer totalCount = questionMapper.count();
         Integer questionCount = totalCount % size == 0 ? totalCount / size : totalCount / size + 1;
 
         if (page < 1)
@@ -33,11 +36,11 @@ public class QuestionDTOService {
         if(page != 0){
             offset = size * (page - 1);
         }
-        List<Question> questions = questionMapper.List(offset, size);
+        List<Question> questions = questionMapper.selectByExampleWithRowbounds(new QuestionExample(), new RowBounds(offset,size));
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         PaginationDTO paginationDTO = new PaginationDTO();
         for (Question question : questions) {
-            User user = userMapper.findById(question.getCreator());
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
             questionDTO.setUser(user);
@@ -50,7 +53,11 @@ public class QuestionDTOService {
     }
     public PaginationDTO listByUserId(Integer page, Integer size, Integer userId) {
 
-        Integer totalCount = questionMapper.countByUserId(userId);
+//        Integer totalCount = questionMapper.countByUserId(userId);
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.createCriteria()
+                .andCreatorEqualTo(userId);
+        Integer totalCount = (int)questionMapper.countByExample(questionExample);
         Integer questionCount = totalCount % size == 0 ? totalCount / size : totalCount / size + 1;
         if (page < 1)
             page = 1;
@@ -60,11 +67,16 @@ public class QuestionDTOService {
         if(page != 0) {
             offset = size * (page - 1);
         }
-        List<Question> questions = questionMapper.ListByUserId(offset, size,userId);
+//        List<Question> questions = questionMapper.ListByUserId(offset, size,userId);
+        QuestionExample example = new QuestionExample();
+        example.createCriteria()
+                .andCreatorEqualTo(userId);
+        List<Question> questions = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, size));
+
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         PaginationDTO paginationDTO = new PaginationDTO();
         for (Question question : questions) {
-            User user = userMapper.findById(question.getCreator());
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
             questionDTO.setUser(user);
@@ -77,10 +89,11 @@ public class QuestionDTOService {
     }
 
     public QuestionDTO getById(Integer id) {
-        Question question = questionMapper.getById(id);
+//        Question question = questionMapper.getById(id);
+        Question question = questionMapper.selectByPrimaryKey(id);
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
-        User user = userMapper.findById(question.getCreator());
+        User user = userMapper.selectByPrimaryKey(question.getCreator());
         questionDTO.setUser(user);
         return questionDTO;
     }

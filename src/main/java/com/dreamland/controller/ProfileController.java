@@ -1,7 +1,6 @@
 package com.dreamland.controller;
 
 import com.dreamland.dto.PaginationDTO;
-import com.dreamland.dto.QuestionDTO;
 import com.dreamland.pojo.User;
 import com.dreamland.service.QuestionDTOService;
 import org.springframework.beans.factory.annotation.Autowired;

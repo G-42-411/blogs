@@ -28,7 +28,8 @@ public class publishController {
     @GetMapping("/toEdit/{id}")
     public String toEdit(@PathVariable("id") Integer id,
                          Model model){
-        Question question = questionMapper.getById(id);
+        Question question = questionMapper.selectByPrimaryKey(id);
+//        Question question = questionMapper.getById(id);
         model.addAttribute("id",question.getId());
         model.addAttribute("title",question.getTitle());
         model.addAttribute("description",question.getDescription());

@@ -2,7 +2,6 @@ package com.dreamland.controller;
 
 import com.dreamland.dto.AccessToken;
 import com.dreamland.dto.GitHubUser;
-import com.dreamland.mapper.UserMapper;
 import com.dreamland.pojo.User;
 import com.dreamland.service.UserService;
 import com.dreamland.utils.GithubProvider;

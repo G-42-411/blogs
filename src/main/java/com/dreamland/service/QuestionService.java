@@ -12,11 +12,13 @@ public class QuestionService {
 
     public void createOrUpdate(Question question, Integer id) {
         if(id == null){
-            questionMapper.create(question);
+//            questionMapper.create(question);
+            questionMapper.insert(question);
         }else {
             question.setGmtModified(System.currentTimeMillis());
             question.setId(id);
-            questionMapper.update(question);
+            questionMapper.updateByPrimaryKey(question);
+//            questionMapper.update(question);
         }
     }
 }
