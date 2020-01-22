@@ -4,6 +4,7 @@ import com.dreamland.pojo.Question;
 import com.dreamland.pojo.QuestionExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
 public interface QuestionMapper {
@@ -134,4 +135,7 @@ public interface QuestionMapper {
      * @mbg.generated Tue Jan 21 23:20:56 CST 2020
      */
     int updateByPrimaryKey(Question record);
+
+    @Update("update question set view_count = view_count + 1 where id = #{id}")
+    void addViewCount(@Param("id") Integer id);
 }

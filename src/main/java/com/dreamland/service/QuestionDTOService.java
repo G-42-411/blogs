@@ -25,7 +25,6 @@ public class QuestionDTOService {
 
     public PaginationDTO list(Integer page, Integer size) {
         Integer totalCount = (int)questionMapper.countByExample(new QuestionExample());
-//        Integer totalCount = questionMapper.count();
         Integer questionCount = totalCount % size == 0 ? totalCount / size : totalCount / size + 1;
 
         if (page < 1)
@@ -53,7 +52,6 @@ public class QuestionDTOService {
     }
     public PaginationDTO listByUserId(Integer page, Integer size, Integer userId) {
 
-//        Integer totalCount = questionMapper.countByUserId(userId);
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria()
                 .andCreatorEqualTo(userId);
@@ -67,7 +65,6 @@ public class QuestionDTOService {
         if(page != 0) {
             offset = size * (page - 1);
         }
-//        List<Question> questions = questionMapper.ListByUserId(offset, size,userId);
         QuestionExample example = new QuestionExample();
         example.createCriteria()
                 .andCreatorEqualTo(userId);
@@ -89,12 +86,15 @@ public class QuestionDTOService {
     }
 
     public QuestionDTO getById(Integer id) {
-//        Question question = questionMapper.getById(id);
         Question question = questionMapper.selectByPrimaryKey(id);
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
         User user = userMapper.selectByPrimaryKey(question.getCreator());
         questionDTO.setUser(user);
         return questionDTO;
+    }
+
+    public void addViewCount(Integer id){
+        questionMapper.addViewCount(id);
     }
 }
