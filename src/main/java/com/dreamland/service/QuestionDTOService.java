@@ -2,6 +2,8 @@ package com.dreamland.service;
 
 import com.dreamland.dto.PaginationDTO;
 import com.dreamland.dto.QuestionDTO;
+import com.dreamland.exception.CustomizeErrorCode;
+import com.dreamland.exception.CustomizeException;
 import com.dreamland.mapper.QuestionMapper;
 import com.dreamland.mapper.UserMapper;
 import com.dreamland.pojo.Question;
@@ -87,6 +89,9 @@ public class QuestionDTOService {
 
     public QuestionDTO getById(Integer id) {
         Question question = questionMapper.selectByPrimaryKey(id);
+        if(question == null){
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
         User user = userMapper.selectByPrimaryKey(question.getCreator());

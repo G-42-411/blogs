@@ -1,5 +1,7 @@
 package com.dreamland.service;
 
+import com.dreamland.exception.CustomizeErrorCode;
+import com.dreamland.exception.CustomizeException;
 import com.dreamland.mapper.QuestionMapper;
 import com.dreamland.pojo.Question;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,10 @@ public class QuestionService {
             question.setGmtModified(System.currentTimeMillis());
             question.setId(id);
             int status = questionMapper.updateByPrimaryKey(question);
+
+            if(status != 0){
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
         }
     }
 }
