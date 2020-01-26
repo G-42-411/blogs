@@ -29,3 +29,9 @@ body{
     color: #999;
     cursor:pointer;
 }
+.text-pos{
+    padding-top: 10px;
+}
+.comment{
+    margin: 15px 0px;
+}

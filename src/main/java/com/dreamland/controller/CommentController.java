@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,11 +26,13 @@ public class CommentController {
     @Autowired
     CommentService commentService;
 
-    @RequestMapping("/comment")
+    @ResponseBody
+    @RequestMapping(value = "/comment", method = RequestMethod.POST)
     public Object post(@RequestBody CommentDTO commentDTO,
                        HttpServletRequest request){
 
-        User user = (User) request.getAttribute("user");
+        System.out.println(commentDTO);
+        User user = (User) request.getSession().getAttribute("user");
         if (user == null){
             return ResultDTO.errorof(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
