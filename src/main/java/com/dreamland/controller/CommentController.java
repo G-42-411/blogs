@@ -3,6 +3,7 @@ package com.dreamland.controller;
 import com.dreamland.dto.CommentDTO;
 import com.dreamland.dto.ResultDTO;
 import com.dreamland.enums.CommentTypeEnum;
+import com.dreamland.exception.CustomizeErrorCode;
 import com.dreamland.mapper.CommentMapper;
 import com.dreamland.pojo.Comment;
 import com.dreamland.pojo.User;
@@ -29,7 +30,7 @@ public class CommentController {
 
         User user = (User) request.getAttribute("user");
         if (user == null){
-            return ResultDTO.errorof(2020,"未登录不能评论，请先登录！");
+            return ResultDTO.errorof(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
         Comment comment = new Comment();
         comment.setParentId(commentDTO.getParentId());
@@ -39,7 +40,7 @@ public class CommentController {
         comment.setGmtModified(comment.getGmtCreate());
         comment.setCommentator(user.getId());
         comment.setLikeCount(0L);
-        commentMapper.insert(comment);
+        commentService.insert(comment);
         return ResultDTO.okof();
     }
 }

@@ -26,7 +26,7 @@ public class publishController {
     QuestionService questionService;
 
     @GetMapping("/toEdit/{id}")
-    public String toEdit(@PathVariable("id") Integer id,
+    public String toEdit(@PathVariable("id") Long id,
                          Model model){
         Question question = questionMapper.selectByPrimaryKey(id);
 //        Question question = questionMapper.getById(id);
@@ -47,7 +47,7 @@ public class publishController {
             @RequestParam("title") String title,
             @RequestParam("description") String description,
             @RequestParam("tag") String tag,
-            @RequestParam(name = "id",required = false) Integer id,
+            @RequestParam(name = "id",required = false) Long id,
             HttpServletRequest request,
             Model model) {
         Question question = new Question();

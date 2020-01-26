@@ -96,6 +96,12 @@
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
                 <version>1.4.0</version>
+                <configuration>
+                    <!--允许移动生成的文件-->
+                    <verbose>true</verbose>
+                    <!--允许覆盖生成的文件-->
+                    <overwrite>true</overwrite>
+                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>mysql</groupId>

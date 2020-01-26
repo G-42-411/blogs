@@ -12,7 +12,7 @@ public class QuestionService {
     @Autowired
     QuestionMapper questionMapper;
 
-    public void createOrUpdate(Question question, Integer id) {
+    public void createOrUpdate(Question question, Long id) {
         if(id == null){
             questionMapper.insert(question);
         }else {
