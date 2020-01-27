@@ -14,18 +14,17 @@ public class ResultDTO {
         this.message = message;
     }
 
-    public static ResultDTO errorof(CustomizeErrorCode errorCode){
-        return new ResultDTO(errorCode.getCode(),errorCode.getMessage());
+    public static ResultDTO errorof(CustomizeErrorCode errorCode) {
+        return new ResultDTO(errorCode.getCode(), errorCode.getMessage());
     }
 
-    public static ResultDTO okof(){
-        return new ResultDTO(200,"成功！");
+    public static ResultDTO okof() {
+        return new ResultDTO(200, "成功！");
     }
 
-    public static ResultDTO errorof(CustomizeException e){
-        return new ResultDTO(e.getCode(),e.getMessage());
+    public static ResultDTO errorof(CustomizeException e) {
+        return new ResultDTO(e.getCode(), e.getMessage());
     }
-
 
 
 }

@@ -72,6 +72,14 @@
         </div>
     </div>
 </div>
-
+<script type="application/javascript">
+    window.onload = function () {
+       var closeable = window.localStorage.getItem("closeable");
+       if(closeable == "true"){
+           window.close();
+           window.localStorage.removeItem("closeable");
+       }
+    }
+</script>
 </body>
 </html>

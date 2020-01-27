@@ -29,12 +29,12 @@ public class CommentController {
     @ResponseBody
     @RequestMapping(value = "/comment", method = RequestMethod.POST)
     public Object post(@RequestBody CommentDTO commentDTO,
-                       HttpServletRequest request){
+                       HttpServletRequest request) {
 
         System.out.println(commentDTO);
         User user = (User) request.getSession().getAttribute("user");
-        if (user == null){
-            return ResultDTO.errorof(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        if (user == null) {
+            return ResultDTO.errorof(CustomizeErrorCode.NO_LOGIN);
         }
         Comment comment = new Comment();
         comment.setParentId(commentDTO.getParentId());
