@@ -15,7 +15,7 @@ function post() {
         dataType: "json",
         success: function (data) {
             if (data.code == 200) {
-                $("#content").hide();
+                window.location.reload();
             } else {
                 if(data.code == 2003){
                     if(window.confirm(data.message)){

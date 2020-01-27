@@ -1,13 +1,13 @@
 package com.dreamland.controller;
 
-import com.dreamland.dto.CommentDTO;
+import com.dreamland.dto.CommentCreateDTO;
 import com.dreamland.dto.ResultDTO;
-import com.dreamland.enums.CommentTypeEnum;
 import com.dreamland.exception.CustomizeErrorCode;
 import com.dreamland.mapper.CommentMapper;
 import com.dreamland.pojo.Comment;
 import com.dreamland.pojo.User;
 import com.dreamland.service.CommentService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,18 +28,21 @@ public class CommentController {
 
     @ResponseBody
     @RequestMapping(value = "/comment", method = RequestMethod.POST)
-    public Object post(@RequestBody CommentDTO commentDTO,
+    public Object post(@RequestBody CommentCreateDTO commentCreateDTO,
                        HttpServletRequest request) {
 
-        System.out.println(commentDTO);
+        System.out.println(commentCreateDTO);
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             return ResultDTO.errorof(CustomizeErrorCode.NO_LOGIN);
         }
+        if (commentCreateDTO == null || StringUtils.isBlank(commentCreateDTO.getContent())){
+            return ResultDTO.errorof(CustomizeErrorCode.COMMENT_IS_EMPTY);
+        }
         Comment comment = new Comment();
-        comment.setParentId(commentDTO.getParentId());
-        comment.setContent(commentDTO.getContent());
-        comment.setType(commentDTO.getType());
+        comment.setParentId(commentCreateDTO.getParentId());
+        comment.setContent(commentCreateDTO.getContent());
+        comment.setType(commentCreateDTO.getType());
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setGmtModified(comment.getGmtCreate());
         comment.setCommentator(user.getId());

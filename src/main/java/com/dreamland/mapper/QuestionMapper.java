@@ -137,7 +137,7 @@ public interface QuestionMapper {
     int updateByPrimaryKey(Question record);
 
     @Update("update question set view_count = view_count + 1 where id = #{id}")
-    void addViewCount(@Param("id") Integer id);
+    void addViewCount(@Param("id") Long id);
 
     @Update("update question set comment_count = comment_count + 1 where id = #{id}")
     void addCommentCount(@Param("id") Integer id);

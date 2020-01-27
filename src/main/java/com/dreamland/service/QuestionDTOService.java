@@ -99,7 +99,7 @@ public class QuestionDTOService {
         return questionDTO;
     }
 
-    public void addViewCount(Integer id){
+    public void addViewCount(Long id){
         questionMapper.addViewCount(id);
     }
 }
