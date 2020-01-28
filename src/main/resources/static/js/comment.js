@@ -1,15 +1,19 @@
 function post() {
     var questionId = $("#question_id").val();
-    var comment = $("#comment_content").val();
+    var content = $("#comment_content").val();
     console.log(questionId);
-    console.log(comment);
+    console.log(content);
+    comment2target(questionId,1,content);
+}
+
+function comment2target(targetId, type, content) {
     $.ajax({
         url: "/comment",
         type: "post",
         data: JSON.stringify({
-            "parentId": questionId,
-            "content": comment,
-            "type": 1
+            "parentId": targetId,
+            "content": content,
+            "type": type
         }),
         contentType: "application/json",
         dataType: "json",
@@ -28,4 +32,23 @@ function post() {
             }
         },
     })
+}
+
+function comment(e){
+    var commentId = e.getAttribute("data-id");
+    var content = $("#input-"+commentId).val();
+    comment2target(commentId,2,content);
+}
+
+function collapseComments(e) {
+    var id = e.getAttribute("data-id");
+    $(e).toggleClass("active");
+    var isHas = $("#comment-"+id).toggleClass("in");
+    if(isHas){
+        $.getJSON("/comment/"+id, function (data) {
+            console.log(data);
+        })
+    }
+    alert(isHas);
+    console.log(id);
 }

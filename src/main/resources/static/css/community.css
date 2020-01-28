@@ -58,3 +58,16 @@ body {
 .hr{
     margin-top: 10px;
 }
+
+.active{
+    color: #499ef3;
+}
+.second-comment{
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding-top: 20px;
+}
+.second-btn{
+    float: right;
+    margin: 10px 0px;
+}

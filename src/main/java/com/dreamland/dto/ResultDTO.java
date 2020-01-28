@@ -5,26 +5,36 @@ import com.dreamland.exception.CustomizeException;
 import lombok.Data;
 
 @Data
-public class ResultDTO {
+public class ResultDTO<T> {
     private Integer code;
     private String message;
+    private T data;
 
-    public ResultDTO(Integer code, String message) {
-        this.code = code;
-        this.message = message;
+    public static ResultDTO errorof(Integer code, String message) {
+        ResultDTO resultDTO = new ResultDTO();
+        resultDTO.setCode(code);
+        resultDTO.setMessage(message);
+        return resultDTO;
     }
 
-    public static ResultDTO errorof(CustomizeErrorCode errorCode) {
-        return new ResultDTO(errorCode.getCode(), errorCode.getMessage());
-    }
-
-    public static ResultDTO okof() {
-        return new ResultDTO(200, "成功！");
+    public static ResultDTO errorof(CustomizeErrorCode e) {
+        return errorof(e.getCode(), e.getMessage());
     }
 
     public static ResultDTO errorof(CustomizeException e) {
-        return new ResultDTO(e.getCode(), e.getMessage());
+        return errorof(e.getCode(),e.getMessage());
     }
 
+    public static ResultDTO okof() {
+        return errorof(200, "请求成功！");
+    }
+
+    public static <T> ResultDTO okof(T t) {
+        ResultDTO resultDTO = new ResultDTO();
+        resultDTO.setCode(200);
+        resultDTO.setMessage("请求成功！");
+        resultDTO.setData(t);
+        return resultDTO;
+    }
 
 }

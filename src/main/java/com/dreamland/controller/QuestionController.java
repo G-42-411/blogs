@@ -2,6 +2,7 @@ package com.dreamland.controller;
 
 import com.dreamland.dto.CommentDTO;
 import com.dreamland.dto.QuestionDTO;
+import com.dreamland.enums.CommentTypeEnum;
 import com.dreamland.service.CommentService;
 import com.dreamland.service.QuestionDTOService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class QuestionController {
         questionDTOService.addViewCount(id);
         QuestionDTO questionDTO = questionDTOService.getById(id);
 
-        List<CommentDTO> comments = commentService.listByQuestionId(id);
+        List<CommentDTO> comments = commentService.listByTargetId(id, CommentTypeEnum.QUESTION);
 
         model.addAttribute("question",questionDTO);
         model.addAttribute("comments",comments);

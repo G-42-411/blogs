@@ -52,8 +52,35 @@
                         <span th:text="${comment.content}">这是评论</span>
                         <div class="icon-color">
                             <span class="glyphicon glyphicon-thumbs-up icon"></span>
-                            <span class="glyphicon glyphicon-comment icon"></span>
+                            <span th:data-id="${comment.id}" class="glyphicon glyphicon-comment icon" onclick="collapseComments(this)"></span>
                             <span class="pull-right" th:text="${#dates.format(comment.gmtCreate,'yyyy-MM-dd')}"></span>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 second-comment collapse"
+                            th:id="${'comment-'+comment.id}">
+                            <!--二级回复-->
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:each="comment:${comments}">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#">
+                                            <img class="media-object img-rounded" th:src="${comment.user.avatarUrl}">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">
+                                            <a th:text="${comment.user.name}"></a>
+                                        </h4>
+                                        <span th:text="${comment.content}">这是评论</span>
+                                        <div class="icon-color">
+                                            <span class="pull-right" th:text="${#dates.format(comment.gmtCreate,'yyyy-MM-dd')}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr">
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <input type="text" class="form-control" placeholder="评论内容..." th:id="'input-'+${comment.id}">
+                                <button type="button" class="btn btn-success second-btn" th:data-id="${comment.id}" onclick="comment(this)">评论</button>
+                            </div>
                         </div>
                     </div>
                 </div>

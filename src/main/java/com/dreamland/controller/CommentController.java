@@ -1,7 +1,9 @@
 package com.dreamland.controller;
 
 import com.dreamland.dto.CommentCreateDTO;
+import com.dreamland.dto.CommentDTO;
 import com.dreamland.dto.ResultDTO;
+import com.dreamland.enums.CommentTypeEnum;
 import com.dreamland.exception.CustomizeErrorCode;
 import com.dreamland.mapper.CommentMapper;
 import com.dreamland.pojo.Comment;
@@ -10,12 +12,10 @@ import com.dreamland.service.CommentService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class CommentController {
@@ -36,7 +36,7 @@ public class CommentController {
         if (user == null) {
             return ResultDTO.errorof(CustomizeErrorCode.NO_LOGIN);
         }
-        if (commentCreateDTO == null || StringUtils.isBlank(commentCreateDTO.getContent())){
+        if (commentCreateDTO == null || StringUtils.isBlank(commentCreateDTO.getContent())) {
             return ResultDTO.errorof(CustomizeErrorCode.COMMENT_IS_EMPTY);
         }
         Comment comment = new Comment();
@@ -49,5 +49,12 @@ public class CommentController {
         comment.setLikeCount(0L);
         commentService.insert(comment);
         return ResultDTO.okof();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/comment/{id}", method = RequestMethod.GET)
+    public ResultDTO<List> comments(@PathVariable("id") Long id) {
+        List<CommentDTO> commentDTOS = commentService.listByTargetId(id, CommentTypeEnum.COMMENT);
+        return ResultDTO.okof(commentDTOS);
     }
 }
