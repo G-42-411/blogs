@@ -45,6 +45,9 @@ public class CommentService {
             if (dbComment == null) {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
+            Comment parentComment = new Comment();
+            parentComment.setId(comment.getParentId());
+            commentMapper.addCommentCount(parentComment);
             commentMapper.insert(comment);
         } else {
             //回复问题
@@ -62,6 +65,7 @@ public class CommentService {
         commentExample.createCriteria()
                 .andParentIdEqualTo(id)
                 .andTypeEqualTo(typeEnum.getType());
+//        commentExample.setOrderByClause("gmt_create desc");
         List<Comment> comments = commentMapper.selectByExample(commentExample);
 
         if (comments.size() == 0) {

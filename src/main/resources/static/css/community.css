@@ -71,3 +71,10 @@ body {
     float: right;
     margin: 10px 0px;
 }
+.comments{
+    border-bottom: 1px solid #eee;
+    padding: 10px 0px;
+}
+.second-input{
+    margin-top: 15px;
+}
