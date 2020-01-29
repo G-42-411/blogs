@@ -78,3 +78,16 @@ body {
 .second-input{
     margin-top: 15px;
 }
+.question-tag{
+    font-size: 14px;
+    margin-right: 5px;
+}
+.problem-list{
+    list-style: none;
+    font-size: 14px;
+    padding-left: 0px;
+
+}
+.problem-list li{
+    margin-top: 5px;
+}

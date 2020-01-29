@@ -13,14 +13,17 @@ public class QuestionService {
     QuestionMapper questionMapper;
 
     public void createOrUpdate(Question question, Long id) {
-        if(id == null){
+        Question dbQuestion = questionMapper.selectByPrimaryKey(id);
+        if(dbQuestion == null){
             questionMapper.insert(question);
-        }else {
-            question.setGmtModified(System.currentTimeMillis());
-            question.setId(id);
-            int status = questionMapper.updateByPrimaryKey(question);
+        }else{
+            dbQuestion.setTitle(question.getTitle());
+            dbQuestion.setTag(question.getTag());
+            dbQuestion.setDescription(question.getDescription());
+            dbQuestion.setGmtModified(System.currentTimeMillis());
+            int status = questionMapper.updateByPrimaryKey(dbQuestion);
 
-            if(status != 0){
+            if(status == 0){
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
         }

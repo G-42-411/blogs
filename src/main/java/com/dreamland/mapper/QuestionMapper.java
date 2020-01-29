@@ -4,6 +4,7 @@ import com.dreamland.pojo.Question;
 import com.dreamland.pojo.QuestionExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 
@@ -141,4 +142,7 @@ public interface QuestionMapper {
 
     @Update("update question set comment_count = comment_count + 1 where id = #{id}")
     void addCommentCount(@Param("id") Integer id);
+
+    @Select("select * from question where tag regexp #{tag} and id != #{id}")
+    List<Question> selectRelated(Question question);
 }

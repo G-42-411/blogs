@@ -9,6 +9,7 @@ import com.dreamland.mapper.UserMapper;
 import com.dreamland.pojo.Question;
 import com.dreamland.pojo.QuestionExample;
 import com.dreamland.pojo.User;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionDTOService {
@@ -37,7 +39,9 @@ public class QuestionDTOService {
         if(page != 0){
             offset = size * (page - 1);
         }
-        List<Question> questions = questionMapper.selectByExampleWithRowbounds(new QuestionExample(), new RowBounds(offset,size));
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.setOrderByClause("gmt_create desc");
+        List<Question> questions = questionMapper.selectByExampleWithRowbounds(questionExample, new RowBounds(offset,size));
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         PaginationDTO paginationDTO = new PaginationDTO();
         for (Question question : questions) {
@@ -101,5 +105,23 @@ public class QuestionDTOService {
 
     public void addViewCount(Long id){
         questionMapper.addViewCount(id);
+    }
+
+    public List<QuestionDTO> selectRelated(QuestionDTO questionDTO) {
+        if(StringUtils.isBlank(questionDTO.getTag())){
+            return new ArrayList<>();
+        }
+        String replace = questionDTO.getTag().replace(" ","").replace(",", "|");
+        Question question = new Question();
+        question.setId(questionDTO.getId());
+        question.setTag(replace);
+
+        List<Question> questions =  questionMapper.selectRelated(question);
+        List<QuestionDTO> questionDTOS = questions.stream().map(q -> {
+            QuestionDTO dbQuestionDTO = new QuestionDTO();
+            BeanUtils.copyProperties(q,dbQuestionDTO);
+            return dbQuestionDTO;
+        }).collect(Collectors.toList());
+        return questionDTOS;
     }
 }
