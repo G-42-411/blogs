@@ -27,6 +27,7 @@
             </span>
             <hr>
             <div th:text="${question.description}"></div>
+            <!--标签-->
             <hr>
                 <span class="label label-info question-tag" th:each="Itag : ${question.tag.split(',')}">
                     <span class="glyphicon glyphicon-tags"></span>
@@ -64,8 +65,6 @@
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 second-comment collapse"
                             th:id="${'comment-'+comment.id}">
-
-
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 second-input">
                                 <input type="text" class="form-control" placeholder="评论内容..." th:id="'input-'+${comment.id}">
                                 <button type="button" class="btn btn-success second-btn" th:data-id="${comment.id}" onclick="comment(this)">评论</button>

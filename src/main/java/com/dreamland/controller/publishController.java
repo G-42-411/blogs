@@ -1,10 +1,12 @@
 package com.dreamland.controller;
 
+import com.dreamland.cache.TagCache;
 import com.dreamland.mapper.QuestionMapper;
 import com.dreamland.mapper.UserMapper;
 import com.dreamland.pojo.Question;
 import com.dreamland.pojo.User;
 import com.dreamland.service.QuestionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,11 +36,13 @@ public class publishController {
         model.addAttribute("title",question.getTitle());
         model.addAttribute("description",question.getDescription());
         model.addAttribute("tag",question.getTag());
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
 
     @GetMapping("/publish")
-    public String publish() {
+    public String publish(Model model) {
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
 
@@ -56,6 +60,7 @@ public class publishController {
         model.addAttribute("title",title);
         model.addAttribute("description",description);
         model.addAttribute("tag",tag);
+        model.addAttribute("tags", TagCache.get());
 
         if(title == null || title == ""){
             model.addAttribute("msg","标题不能为空");
@@ -67,6 +72,12 @@ public class publishController {
         }
         if(tag == null || tag == ""){
             model.addAttribute("msg","标签不能为空");
+            return "/publish";
+        }
+
+        String invalid = TagCache.filterIsValid(tag);
+        if (StringUtils.isNotBlank(invalid)){
+            model.addAttribute("msg","输入非法标签"+invalid);
             return "/publish";
         }
 

@@ -91,3 +91,20 @@ function collapseComments(e) {
         })
     }
 }
+
+function showSelectTag() {
+    $("#select-tag").show();
+}
+
+function selectTag(e) {
+    var value = e.getAttribute("data-tag")
+    var tag = $("#tag").val();
+    if (tag){
+        if(tag.indexOf(value) == -1){
+            $("#tag").val(tag +','+value);
+        }
+    }else{
+        $("#tag").val(value);
+    }
+
+}

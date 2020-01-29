@@ -79,8 +79,9 @@ body {
     margin-top: 15px;
 }
 .question-tag{
-    font-size: 14px;
+    font-size: 12px;
     margin-right: 5px;
+    cursor: pointer;
 }
 .problem-list{
     list-style: none;
@@ -89,5 +90,8 @@ body {
 
 }
 .problem-list li{
+    margin-top: 5px;
+}
+.publish-labels{
     margin-top: 5px;
 }
