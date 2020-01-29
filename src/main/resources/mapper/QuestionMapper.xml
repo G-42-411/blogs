@@ -435,7 +435,8 @@
       comment_count = #{commentCount,jdbcType=INTEGER},
       view_count = #{viewCount,jdbcType=INTEGER},
       like_count = #{likeCount,jdbcType=INTEGER},
-      tag = #{tag,jdbcType=VARCHAR}
+      tag = #{tag,jdbcType=VARCHAR},
+      description = #{description,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByExampleWithBLOBsWithRowbounds" parameterType="com.dreamland.pojo.QuestionExample" resultMap="ResultMapWithBLOBs">
