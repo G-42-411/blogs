@@ -42,15 +42,15 @@
                     <div class="publish-labels" id="select-tag" style="display: none">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist" >
-                            <li role="presentation" class="" th:each="CategoryName:${tags}">
+                            <li role="presentation" th:class="${CategoryNameStat.first?'active':''}" th:each="CategoryName,CategoryNameStat:${tags}">
                                 <a th:href="'#'+${CategoryName.categoryName}" aria-controls="home" role="tab" data-toggle="tab" th:text="${CategoryName.categoryName}">开发语言</a>
                             </li>
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content" >
-                            <div role="tabpanel" class="tab-pane " id="home"  th:each="CategoryName:${tags}" th:id="${CategoryName.categoryName}" >
-                                <span class="label label-info question-tag" onclick="selectTag(this)" th:each="mytag:${CategoryName.tags}" th:data-tag="${mytag}">
-                                    <span class="glyphicon glyphicon-tags"></span> [[${mytag}]]
+                            <div role="tabpanel" class="tab-pane " id="home"  th:each="CategoryName,CategoryNameStat:${tags}" th:id="${CategoryName.categoryName}" th:class="${CategoryNameStat.first?'active tab-pane':'tab-pane'}" >
+                                <span class="label label-info question-tag label-tag" onclick="selectTag(this)" th:each="mytag:${CategoryName.tags}" th:data-tag="${mytag}">
+                                    <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;[[${mytag}]]
                                 </span>
                             </div>
                         </div>

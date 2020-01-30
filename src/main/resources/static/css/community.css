@@ -95,3 +95,8 @@ body {
 .publish-labels{
     margin-top: 5px;
 }
+.label-tag{
+    white-space: normal;
+    margin: 5px 5px;
+    display: inline-block;
+}

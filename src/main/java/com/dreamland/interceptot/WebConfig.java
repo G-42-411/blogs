@@ -10,8 +10,13 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Autowired
     private SessionInterceptor sessionInterceptor;
+    @Autowired
+    private AbnormalLogin abnormalLogin;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(sessionInterceptor).addPathPatterns("/**");
+//        registry.addInterceptor(abnormalLogin).addPathPatterns("/**").excludePathPatterns("/question/*","/","/css/**","/js/**","/fonts/**",
+//                "https://github.com/*","https://api.github.com/*");
     }
 }
