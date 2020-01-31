@@ -2,7 +2,6 @@ package com.dreamland.controller;
 
 import com.dreamland.dto.NotificationDTO;
 import com.dreamland.enums.NotificationTypeEnum;
-import com.dreamland.exception.CustomizeErrorCode;
 import com.dreamland.pojo.User;
 import com.dreamland.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
