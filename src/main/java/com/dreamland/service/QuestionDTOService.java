@@ -61,6 +61,7 @@ public class QuestionDTOService {
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria()
                 .andCreatorEqualTo(userId);
+//        questionExample.setOrderByClause("gmt_create desc");
         Integer totalCount = (int)questionMapper.countByExample(questionExample);
         Integer questionCount = totalCount % size == 0 ? totalCount / size : totalCount / size + 1;
         if (page < 1)
@@ -74,6 +75,7 @@ public class QuestionDTOService {
         QuestionExample example = new QuestionExample();
         example.createCriteria()
                 .andCreatorEqualTo(userId);
+        example.setOrderByClause("gmt_create desc");
         List<Question> questions = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, size));
 
         List<QuestionDTO> questionDTOList = new ArrayList<>();
