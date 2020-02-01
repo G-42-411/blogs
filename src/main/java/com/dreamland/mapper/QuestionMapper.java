@@ -1,5 +1,6 @@
 package com.dreamland.mapper;
 
+import com.dreamland.dto.QuestionQueryDTO;
 import com.dreamland.pojo.Question;
 import com.dreamland.pojo.QuestionExample;
 import java.util.List;
@@ -145,4 +146,9 @@ public interface QuestionMapper {
 
     @Select("select * from question where tag regexp #{tag} and id != #{id}")
     List<Question> selectRelated(Question question);
+
+    @Select("select count(*) from question where title regexp #{search}")
+    Integer countBySearch(QuestionQueryDTO questionQueryDTO);
+    @Select("select * from question where title regexp #{search} order by gmt_create desc limit #{page},#{size}")
+    List<Question> selectBysearch(QuestionQueryDTO questionQueryDTO);
 }

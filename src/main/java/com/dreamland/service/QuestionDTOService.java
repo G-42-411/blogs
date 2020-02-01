@@ -2,8 +2,10 @@ package com.dreamland.service;
 
 import com.dreamland.dto.PaginationDTO;
 import com.dreamland.dto.QuestionDTO;
+import com.dreamland.dto.QuestionQueryDTO;
 import com.dreamland.exception.CustomizeErrorCode;
 import com.dreamland.exception.CustomizeException;
+import com.dreamland.mapper.QuestionEXTMapper;
 import com.dreamland.mapper.QuestionMapper;
 import com.dreamland.mapper.UserMapper;
 import com.dreamland.pojo.Question;
@@ -25,10 +27,21 @@ public class QuestionDTOService {
     @Autowired
     private QuestionMapper questionMapper;
     @Autowired
+    private QuestionEXTMapper questionEXTMapper;
+    @Autowired
     private UserMapper userMapper;
 
-    public PaginationDTO list(Integer page, Integer size) {
-        Integer totalCount = (int)questionMapper.countByExample(new QuestionExample());
+    public PaginationDTO list(String search, Integer page, Integer size) {
+
+        if(StringUtils.isNotBlank(search)){
+            String replace = search.replace(" ", "|");
+        }
+
+
+        QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
+        questionQueryDTO.setSearch(search);
+
+        Integer totalCount = questionEXTMapper.countBySearch(questionQueryDTO);
         Integer questionCount = totalCount % size == 0 ? totalCount / size : totalCount / size + 1;
 
         if (page < 1)
@@ -41,7 +54,9 @@ public class QuestionDTOService {
         }
         QuestionExample questionExample = new QuestionExample();
         questionExample.setOrderByClause("gmt_create desc");
-        List<Question> questions = questionMapper.selectByExampleWithRowbounds(questionExample, new RowBounds(offset,size));
+        questionQueryDTO.setPage(offset);
+        questionQueryDTO.setSize(size);
+        List<Question> questions = questionEXTMapper.selectBySearch(questionQueryDTO);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO<>();
         for (Question question : questions) {
