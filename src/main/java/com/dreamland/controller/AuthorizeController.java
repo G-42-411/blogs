@@ -5,6 +5,7 @@ import com.dreamland.dto.GitHubUser;
 import com.dreamland.pojo.User;
 import com.dreamland.service.UserService;
 import com.dreamland.utils.GithubProvider;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
-
+@Slf4j
 @Controller
 public class AuthorizeController {
 
@@ -57,6 +58,7 @@ public class AuthorizeController {
             response.addCookie(cookie);
             return "redirect:/";
         } else {
+            log.error("callback get github error, {}",gitHubUser);
             return "redirect:/";
         }
     }
